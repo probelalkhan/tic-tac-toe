@@ -7,6 +7,7 @@ import android.widget.GridLayout
 import android.widget.ImageView
 import androidx.core.content.ContextCompat
 import kotlinx.android.synthetic.main.activity_main.*
+import kotlin.random.Random
 
 class MainActivity : AppCompatActivity() {
 
@@ -79,6 +80,12 @@ class MainActivity : AppCompatActivity() {
         override fun onClick(p0: View?) {
             val cell = Cell(i, j)
             board.placeMove(cell, Board.PLAYER)
+
+            if(board.availableCells.isNotEmpty()) {
+                val cCell = board.availableCells[Random.nextInt(0, board.availableCells.size)]
+                board.placeMove(cCell, Board.COMPUTER)
+            }
+
             mapBoardToUi()
         }
     }
