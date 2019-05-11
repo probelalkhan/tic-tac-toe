@@ -78,15 +78,24 @@ class MainActivity : AppCompatActivity() {
     ) : View.OnClickListener {
 
         override fun onClick(p0: View?) {
-            val cell = Cell(i, j)
-            board.placeMove(cell, Board.PLAYER)
 
-            if(board.availableCells.isNotEmpty()) {
-                val cCell = board.availableCells[Random.nextInt(0, board.availableCells.size)]
-                board.placeMove(cCell, Board.COMPUTER)
+            if (!board.isGameOver) {
+                val cell = Cell(i, j)
+                board.placeMove(cell, Board.PLAYER)
+
+                if (board.availableCells.isNotEmpty()) {
+                    val cCell = board.availableCells[Random.nextInt(0, board.availableCells.size)]
+                    board.placeMove(cCell, Board.COMPUTER)
+                }
+
+                mapBoardToUi()
             }
 
-            mapBoardToUi()
+            when {
+                board.hasComputerWon() -> text_view_result.text = "Computer Won"
+                board.hasPlayerWon() -> text_view_result.text = "Player Won"
+                board.isGameOver -> text_view_result.text = "Game Tied"
+            }
         }
     }
 }
