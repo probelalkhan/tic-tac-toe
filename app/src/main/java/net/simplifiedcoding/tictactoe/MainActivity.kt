@@ -82,12 +82,10 @@ class MainActivity : AppCompatActivity() {
             if (!board.isGameOver) {
                 val cell = Cell(i, j)
                 board.placeMove(cell, Board.PLAYER)
-
-                if (board.availableCells.isNotEmpty()) {
-                    val cCell = board.availableCells[Random.nextInt(0, board.availableCells.size)]
-                    board.placeMove(cCell, Board.COMPUTER)
+                board.minimax(0, Board.COMPUTER)
+                board.computersMove?.let {
+                    board.placeMove(it, Board.COMPUTER)
                 }
-
                 mapBoardToUi()
             }
 
